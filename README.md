@@ -25,8 +25,7 @@ The Domain layer contains all the models and the Entities that are being used by
 ### Infra Layer
 Lastly, the Infra layer contains the repositories that are responsible to communicate with Mercado Livre's website, parse the data and return to the Data layer.
 
-![Image of the architecture]
-(architecture-planning.png)
+![Image of the architecture](./images/architecture-planning.png)
 
 ## TDD
 
