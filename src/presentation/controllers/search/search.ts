@@ -1,6 +1,6 @@
 import { MissingParamError } from '../../errors'
 import { HttpRequest, HttpResponse } from '../../protocols'
-import { badRequest, serverError, ok } from '../../helpers/http/http-helper'
+import { badRequest, serverError, ok, noContent } from '../../helpers/http/http-helper'
 import { SearchProduct } from '../../../domain/use-cases/search-product'
 
 export class SearchController {
@@ -20,7 +20,7 @@ export class SearchController {
       }
       const { search, limit } = httpRequest.body
       const products = this.searchProduct.search({ search, limit })
-      return ok(products)
+      return products.length > 0 ? ok(products) : noContent()
     } catch (error) {
       console.error(error)
       return serverError()

@@ -105,4 +105,18 @@ describe('Search Controller', () => {
       state: 'any_state'
     }])
   })
+
+  test('Should return 204 if valid data is provided but not results', () => {
+    const { sut, searchProductStub } = makeSut()
+    jest.spyOn(searchProductStub, 'search').mockReturnValueOnce([])
+    const httpRequest = {
+      body: {
+        search: 'any_search',
+        limit: 10
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(204)
+    expect(httpResponse.body).toEqual(null)
+  })
 })
