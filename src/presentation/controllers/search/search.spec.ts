@@ -13,4 +13,16 @@ describe('Search Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('search'))
   })
+
+  test('Should return 400 if no limit is provided', () => {
+    const sut = new SearchController()
+    const httpRequest = {
+      body: {
+        search: 'any_search'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('limit'))
+  })
 })

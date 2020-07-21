@@ -3,9 +3,14 @@ import { HttpRequest, HttpResponse } from '../../protocols'
 
 export class SearchController {
   handle (httpRequest: HttpRequest): HttpResponse {
-    return {
-      statusCode: 400,
-      body: new MissingParamError('search')
+    const requiredFields = ['search', 'limit']
+    for (const field of requiredFields) {
+      if (!httpRequest.body[field]) {
+        return {
+          statusCode: 400,
+          body: new MissingParamError(field)
+        }
+      }
     }
   }
 }
