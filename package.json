@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
-    "test:staged": "npm test -- --findRelatedTests",
+    "test:staged": "npm test -- -o",
     "test:unit": "npm test -- --watch"
   },
   "repository": {
@@ -24,7 +24,9 @@
     "url": "https://github.com/Mateus-Resende/mercadolivre-crawler/issues"
   },
   "homepage": "https://github.com/Mateus-Resende/mercadolivre-crawler#readme",
-  "dependencies": {},
+  "dependencies": {
+    "husky": "^4.2.5"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.5",
     "@types/node": "^14.0.24",

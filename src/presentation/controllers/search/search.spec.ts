@@ -1,9 +1,17 @@
 import { SearchController } from './search'
 import { MissingParamError } from '../../errors'
 
+interface SutTypes {
+  sut: SearchController
+}
+
+const makeSut = (): SutTypes => ({
+  sut: new SearchController()
+})
+
 describe('Search Controller', () => {
   test('Should return 400 if no search is provided', () => {
-    const sut = new SearchController()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         limit: 10
@@ -15,7 +23,7 @@ describe('Search Controller', () => {
   })
 
   test('Should return 400 if no limit is provided', () => {
-    const sut = new SearchController()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         search: 'any_search'
