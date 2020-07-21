@@ -1,0 +1,27 @@
+{
+  "name": "mercadolivre-crawler",
+  "version": "1.0.0",
+  "description": "An API that retrieves data from Mercado Livre's website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mateus-Resende/mercadolivre-crawler.git"
+  },
+  "keywords": [
+    "Crawler",
+    "Marketplace",
+    "Typescript"
+  ],
+  "author": "Mateus Resende",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mateus-Resende/mercadolivre-crawler/issues"
+  },
+  "homepage": "https://github.com/Mateus-Resende/mercadolivre-crawler#readme",
+  "dependencies": {
+    "git-commit-msg-linter": "^2.4.4"
+  }
+}
