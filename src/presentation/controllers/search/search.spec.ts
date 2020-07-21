@@ -2,6 +2,7 @@ import { SearchController } from './search'
 import { MissingParamError } from '../../errors'
 import { SearchProduct, SearchModel } from '../../../domain/use-cases/search-product'
 import { ProductModel } from '../../../domain/models/product'
+import { ServerError } from '../../errors/server-error'
 
 const makeSearchProduct = (): SearchProduct => {
   class SearchProductStub implements SearchProduct {
@@ -68,5 +69,21 @@ describe('Search Controller', () => {
     }
     sut.handle(httpRequest)
     expect(searchSpy).toHaveBeenCalledWith({ search: 'any_search', limit: 10 })
+  })
+
+  test('Should return 500 if SearchProduct throws', () => {
+    const { sut, searchProductStub } = makeSut()
+    jest.spyOn(searchProductStub, 'search').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpRequest = {
+      body: {
+        search: 'any_search',
+        limit: 10
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })

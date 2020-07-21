@@ -1,6 +1,6 @@
 import { MissingParamError } from '../../errors'
 import { HttpRequest, HttpResponse } from '../../protocols'
-import { badRequest } from '../../helpers/http/http-helper'
+import { badRequest, serverError } from '../../helpers/http/http-helper'
 import { SearchProduct } from '../../../domain/use-cases/search-product'
 
 export class SearchController {
@@ -11,13 +11,18 @@ export class SearchController {
   }
 
   handle (httpRequest: HttpRequest): HttpResponse {
-    const requiredFields = ['search', 'limit']
-    for (const field of requiredFields) {
-      if (!httpRequest.body[field]) {
-        return badRequest(new MissingParamError(field))
+    try {
+      const requiredFields = ['search', 'limit']
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
       }
+      const { search, limit } = httpRequest.body
+      this.searchProduct.search({ search, limit })
+    } catch (error) {
+      console.error(error)
+      return serverError()
     }
-    const { search, limit } = httpRequest.body
-    this.searchProduct.search({ search, limit })
   }
 }
