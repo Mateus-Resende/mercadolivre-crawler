@@ -19,7 +19,8 @@ export class SearchController {
         }
       }
       const { search, limit } = httpRequest.body
-      return ok(this.searchProduct.search({ search, limit }))
+      const products = this.searchProduct.search({ search, limit })
+      return ok(products)
     } catch (error) {
       console.error(error)
       return serverError()

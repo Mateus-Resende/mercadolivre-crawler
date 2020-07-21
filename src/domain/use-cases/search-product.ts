@@ -6,5 +6,5 @@ export interface SearchModel {
 }
 
 export interface SearchProduct {
-  search: (search: SearchModel) => ProductModel
+  search: (search: SearchModel) => ProductModel[]
 }

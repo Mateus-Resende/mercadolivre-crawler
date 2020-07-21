@@ -6,14 +6,14 @@ import { ServerError } from '../../errors/server-error'
 
 const makeSearchProduct = (): SearchProduct => {
   class SearchProductStub implements SearchProduct {
-    search (search: SearchModel): ProductModel {
-      return {
+    search (search: SearchModel): ProductModel[] {
+      return [{
         name: 'any_name',
         link: 'any_link',
         price: 10.9,
         store: 'any_store',
         state: 'any_state'
-      }
+      }]
     }
   }
   return new SearchProductStub()
@@ -97,12 +97,12 @@ describe('Search Controller', () => {
     }
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(200)
-    expect(httpResponse.body).toEqual({
+    expect(httpResponse.body).toEqual([{
       name: 'any_name',
       link: 'any_link',
       price: 10.9,
       store: 'any_store',
       state: 'any_state'
-    })
+    }])
   })
 })
