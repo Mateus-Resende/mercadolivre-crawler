@@ -86,4 +86,23 @@ describe('Search Controller', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
   })
+
+  test('Should return 200 if valid data is provided', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        search: 'any_search',
+        limit: 10
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      name: 'any_name',
+      link: 'any_link',
+      price: 10.9,
+      store: 'any_store',
+      state: 'any_state'
+    })
+  })
 })
