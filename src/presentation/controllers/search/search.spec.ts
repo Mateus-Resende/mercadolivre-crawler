@@ -1,13 +1,36 @@
 import { SearchController } from './search'
 import { MissingParamError } from '../../errors'
+import { SearchProduct, SearchModel } from '../../../domain/use-cases/search-product'
+import { ProductModel } from '../../../domain/models/product'
+
+const makeSearchProduct = (): SearchProduct => {
+  class SearchProductStub implements SearchProduct {
+    search (search: SearchModel): ProductModel {
+      return {
+        name: 'any_name',
+        link: 'any_link',
+        price: 10.9,
+        store: 'any_store',
+        state: 'any_state'
+      }
+    }
+  }
+  return new SearchProductStub()
+}
 
 interface SutTypes {
   sut: SearchController
+  searchProductStub: SearchProduct
 }
 
-const makeSut = (): SutTypes => ({
-  sut: new SearchController()
-})
+const makeSut = (): SutTypes => {
+  const searchProductStub = makeSearchProduct()
+  const sut = new SearchController(searchProductStub)
+  return {
+    sut,
+    searchProductStub
+  }
+}
 
 describe('Search Controller', () => {
   test('Should return 400 if no search is provided', () => {
@@ -32,5 +55,18 @@ describe('Search Controller', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('limit'))
+  })
+
+  test('Should call the SearchProducts with the correct values', () => {
+    const { sut, searchProductStub } = makeSut()
+    const searchSpy = jest.spyOn(searchProductStub, 'search')
+    const httpRequest = {
+      body: {
+        search: 'any_search',
+        limit: 10
+      }
+    }
+    sut.handle(httpRequest)
+    expect(searchSpy).toHaveBeenCalledWith({ search: 'any_search', limit: 10 })
   })
 })
