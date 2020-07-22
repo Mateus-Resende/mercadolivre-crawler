@@ -1,9 +1,9 @@
 import { MissingParamError } from '../../errors'
-import { HttpRequest, HttpResponse } from '../../protocols'
+import { HttpRequest, HttpResponse, Controller } from '../../protocols'
 import { badRequest, serverError, ok, noContent } from '../../helpers/http/http-helper'
 import { SearchProduct } from '../../../domain/use-cases/search-product'
 
-export class SearchController {
+export class SearchController implements Controller {
   private readonly searchProduct: SearchProduct
 
   constructor (searchProduct: SearchProduct) {
