@@ -34,7 +34,26 @@ describe('WebSearchProduct UseCase', () => {
   test('should call MarketplaceRepository with correct values', async () => {
     const { sut, marketplaceRepositoryStub } = makeSut()
     const repositorySpy = jest.spyOn(marketplaceRepositoryStub, 'search')
-    await sut.search({ search: 'any_search', limit: 10 })
-    expect(repositorySpy).toHaveBeenCalledWith({ search: 'any_search', limit: 10 })
+    await sut.search({
+      search: 'any_search',
+      limit: 10
+    })
+    expect(repositorySpy).toHaveBeenCalledWith({
+      search: 'any_search',
+      limit: 10
+    })
+  })
+
+  test('should throw if MarketplaceRepository throws', async () => {
+    const { sut, marketplaceRepositoryStub } = makeSut()
+    jest
+      .spyOn(marketplaceRepositoryStub, 'search')
+      .mockImplementationOnce(async () => new Promise((resolve, reject) => reject(new Error())))
+    const searchData = {
+      search: 'any_search',
+      limit: 10
+    }
+    const promise = sut.search(searchData)
+    await expect(promise).rejects.toThrow()
   })
 })
