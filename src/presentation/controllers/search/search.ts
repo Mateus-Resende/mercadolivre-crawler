@@ -10,7 +10,7 @@ export class SearchController implements Controller {
     this.searchProduct = searchProduct
   }
 
-  handle (httpRequest: HttpRequest): HttpResponse {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const requiredFields = ['search', 'limit']
       for (const field of requiredFields) {
@@ -19,7 +19,7 @@ export class SearchController implements Controller {
         }
       }
       const { search, limit } = httpRequest.body
-      const products = this.searchProduct.search({ search, limit })
+      const products = await this.searchProduct.search({ search, limit })
       return products.length > 0 ? ok(products) : noContent()
     } catch (error) {
       console.error(error)

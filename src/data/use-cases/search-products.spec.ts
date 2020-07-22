@@ -5,7 +5,7 @@ import { WebSearchProduct } from './search-products'
 
 const makeMarketplaceRepository = (): MarketplaceRepository => {
   class MarketplaceRepositoryStub implements MarketplaceRepository {
-    search (searchData: SearchModel): ProductModel[] {
+    async search (searchData: SearchModel): Promise<ProductModel[]> {
       const fakeProduct = {
         name: 'any_name',
         link: 'any_link',
@@ -13,7 +13,7 @@ const makeMarketplaceRepository = (): MarketplaceRepository => {
         store: 'any_store',
         state: 'any_state'
       }
-      return [fakeProduct]
+      return await Promise.resolve([fakeProduct])
     }
   }
   return new MarketplaceRepositoryStub()
@@ -31,10 +31,10 @@ const makeSut = (): SutTypes => {
 }
 
 describe('WebSearchProduct UseCase', () => {
-  test('should call MarketplaceRepository with correct values', () => {
+  test('should call MarketplaceRepository with correct values', async () => {
     const { sut, marketplaceRepositoryStub } = makeSut()
     const repositorySpy = jest.spyOn(marketplaceRepositoryStub, 'search')
-    sut.search({ search: 'any_search', limit: 10 })
+    await sut.search({ search: 'any_search', limit: 10 })
     expect(repositorySpy).toHaveBeenCalledWith({ search: 'any_search', limit: 10 })
   })
 })

@@ -9,8 +9,8 @@ export class WebSearchProduct implements SearchProduct {
     this.marketplaceRepository = marketplaceRepository
   }
 
-  search (search: SearchModel): ProductModel[] {
-    this.marketplaceRepository.search(search)
-    return []
+  async search (search: SearchModel): Promise<ProductModel[]> {
+    await this.marketplaceRepository.search(search)
+    return new Promise(resolve => resolve([]))
   }
 }
