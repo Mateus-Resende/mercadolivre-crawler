@@ -1,7 +1,7 @@
 import { SearchModel } from '../../domain/use-cases/search-product'
 import { ProductModel } from '../../domain/models/product'
 import { MarketplaceRepository } from '../protocols/marketplace-repository'
-import { WebSearchProduct } from './search-products'
+import { WebSearchProduct } from './web-search-products'
 
 const makeMarketplaceRepository = (): MarketplaceRepository => {
   class MarketplaceRepositoryStub implements MarketplaceRepository {
@@ -13,7 +13,7 @@ const makeMarketplaceRepository = (): MarketplaceRepository => {
         store: 'any_store',
         state: 'any_state'
       }
-      return await Promise.resolve([fakeProduct])
+      return await Promise.resolve([fakeProduct, fakeProduct])
     }
   }
   return new MarketplaceRepositoryStub()
@@ -55,5 +55,30 @@ describe('WebSearchProduct UseCase', () => {
     }
     const promise = sut.search(searchData)
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return an array of ProductModel on success', async () => {
+    const { sut } = makeSut()
+    const searchData = {
+      search: 'any_search',
+      limit: 10
+    }
+    const products = await sut.search(searchData)
+    expect(products).toEqual([
+      {
+        name: 'any_name',
+        link: 'any_link',
+        price: 10.9,
+        store: 'any_store',
+        state: 'any_state'
+      },
+      {
+        name: 'any_name',
+        link: 'any_link',
+        price: 10.9,
+        store: 'any_store',
+        state: 'any_state'
+      }
+    ])
   })
 })

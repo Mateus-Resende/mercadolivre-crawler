@@ -10,7 +10,7 @@ export class WebSearchProduct implements SearchProduct {
   }
 
   async search (search: SearchModel): Promise<ProductModel[]> {
-    await this.marketplaceRepository.search(search)
-    return new Promise(resolve => resolve([]))
+    const products = await this.marketplaceRepository.search(search)
+    return products
   }
 }
