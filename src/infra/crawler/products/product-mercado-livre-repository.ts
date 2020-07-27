@@ -7,6 +7,6 @@ export class MercadoLivreRepository implements WebCrawlerRepository {
   async search (search: SearchModel): Promise<ProductModel[]> {
     const searchPage = new SearchPage()
     await searchPage.loadPage(search.text)
-    return searchPage.getProductsList()
+    return searchPage.getProductsList(search.limit)
   }
 }

@@ -38,7 +38,7 @@ describe('ProductMercadoLivreRepository', () => {
 
       const searchParams = {
         text: 'teclado mecanico',
-        limit: 50
+        limit: 10
       }
       const products = await sut.search(searchParams)
       expect(products).toBeInstanceOf(Array)

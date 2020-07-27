@@ -1,6 +1,6 @@
 import { ProductModel } from '../../../../domain/models/product'
 import Axios from 'axios'
-import Cheerio from 'cheerio'
+import $ from 'cheerio'
 import { ProductPage } from './product-page'
 
 export class SearchPage {
@@ -15,11 +15,11 @@ export class SearchPage {
     this.page = await Axios.get(uri)
   }
 
-  async getProductsList (): Promise<ProductModel[]> {
-    const items = Cheerio(this.LINK_CLASS, this.page.data)
-
-    for (let i = 0; i < items.length; i++) {
-      this.productUrls.push(Cheerio(this.LINK_CLASS, this.page.data)[i].attribs.href)
+  async getProductsList (limit: number): Promise<ProductModel[]> {
+    const items = $(this.LINK_CLASS, this.page.data)
+    const max = Math.min(limit, items.length)
+    for (let i = 0; i < max; i++) {
+      this.productUrls.push($(this.LINK_CLASS, this.page.data)[i].attribs.href)
     }
 
     return Promise.all(
