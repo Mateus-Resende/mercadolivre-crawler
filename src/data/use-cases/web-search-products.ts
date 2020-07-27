@@ -1,11 +1,11 @@
 import { SearchProduct, SearchModel } from '../../domain/use-cases/search-product'
 import { ProductModel } from '../../domain/models/product'
-import { MarketplaceRepository } from '../protocols/marketplace-repository'
+import { WebCrawlerRepository } from '../protocols/web-crawler-repository'
 
 export class WebSearchProduct implements SearchProduct {
-  private readonly marketplaceRepository: MarketplaceRepository
+  private readonly marketplaceRepository: WebCrawlerRepository
 
-  constructor (marketplaceRepository: MarketplaceRepository) {
+  constructor (marketplaceRepository: WebCrawlerRepository) {
     this.marketplaceRepository = marketplaceRepository
   }
 

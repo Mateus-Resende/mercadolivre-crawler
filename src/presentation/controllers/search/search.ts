@@ -19,7 +19,7 @@ export class SearchController implements Controller {
         }
       }
       const { search, limit } = httpRequest.body
-      const products = await this.searchProduct.search({ search, limit })
+      const products = await this.searchProduct.search({ text: search, limit })
       return products.length > 0 ? ok(products) : noContent()
     } catch (error) {
       console.error(error)

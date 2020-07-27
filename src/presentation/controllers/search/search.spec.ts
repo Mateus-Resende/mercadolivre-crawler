@@ -68,7 +68,7 @@ describe('Search Controller', () => {
       }
     }
     await sut.handle(httpRequest)
-    expect(searchSpy).toHaveBeenCalledWith({ search: 'any_search', limit: 10 })
+    expect(searchSpy).toHaveBeenCalledWith({ text: 'any_search', limit: 10 })
   })
 
   test('Should return 500 if SearchProduct throws', async () => {

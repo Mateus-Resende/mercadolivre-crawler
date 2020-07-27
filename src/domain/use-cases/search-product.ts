@@ -1,7 +1,7 @@
 import { ProductModel } from '../models/product'
 
 export interface SearchModel {
-  search: string
+  text: string
   limit: number
 }
 

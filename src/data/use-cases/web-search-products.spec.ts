@@ -1,10 +1,10 @@
 import { SearchModel } from '../../domain/use-cases/search-product'
 import { ProductModel } from '../../domain/models/product'
-import { MarketplaceRepository } from '../protocols/marketplace-repository'
+import { WebCrawlerRepository } from '../protocols/web-crawler-repository'
 import { WebSearchProduct } from './web-search-products'
 
-const makeMarketplaceRepository = (): MarketplaceRepository => {
-  class MarketplaceRepositoryStub implements MarketplaceRepository {
+const makeMarketplaceRepository = (): WebCrawlerRepository => {
+  class MarketplaceRepositoryStub implements WebCrawlerRepository {
     async search (searchData: SearchModel): Promise<ProductModel[]> {
       const fakeProduct = {
         name: 'any_name',
@@ -21,7 +21,7 @@ const makeMarketplaceRepository = (): MarketplaceRepository => {
 
 interface SutTypes {
   sut: WebSearchProduct
-  marketplaceRepositoryStub: MarketplaceRepository
+  marketplaceRepositoryStub: WebCrawlerRepository
 }
 
 const makeSut = (): SutTypes => {
@@ -35,11 +35,11 @@ describe('WebSearchProduct UseCase', () => {
     const { sut, marketplaceRepositoryStub } = makeSut()
     const repositorySpy = jest.spyOn(marketplaceRepositoryStub, 'search')
     await sut.search({
-      search: 'any_search',
+      text: 'any_search',
       limit: 10
     })
     expect(repositorySpy).toHaveBeenCalledWith({
-      search: 'any_search',
+      text: 'any_search',
       limit: 10
     })
   })
@@ -50,7 +50,7 @@ describe('WebSearchProduct UseCase', () => {
       .spyOn(marketplaceRepositoryStub, 'search')
       .mockImplementationOnce(async () => new Promise((resolve, reject) => reject(new Error())))
     const searchData = {
-      search: 'any_search',
+      text: 'any_search',
       limit: 10
     }
     const promise = sut.search(searchData)
@@ -60,7 +60,7 @@ describe('WebSearchProduct UseCase', () => {
   test('Should return an array of ProductModel on success', async () => {
     const { sut } = makeSut()
     const searchData = {
-      search: 'any_search',
+      text: 'any_search',
       limit: 10
     }
     const products = await sut.search(searchData)
