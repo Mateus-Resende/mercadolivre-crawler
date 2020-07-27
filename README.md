@@ -30,3 +30,64 @@ Lastly, the Infra layer contains the repositories that are responsible to commun
 ## TDD
 
 The project was built using TDD and making sure that each passing test results in a commit to the repository. Therefore, I have total control of everything that each feature or refactoring is actually covered by tests which gives me confidence to change things as I please.
+
+## Missing tasks
+
+- Ensure that the API goes through more pages in case the limit given is greater than the pagination of Mercado Livre's search page.
+- Dockerize the application to make sure everything can be deployed easier
+- Setup CI/CD with circleCI (free account)
+
+## Setup
+
+Make sure you have at least node v12 installed and run `yarn install` in the root folder.
+To run the api:
+  ```yarn build && yarn start```
+To run tests:
+  ```yarn test```
+To run unit tests and watch while developing:
+  ```yarn run test:unit```
+To run integration tests:
+  ```yarn run test:integraiton```
+To run with coverage:
+  ```yarn run test:ci```
+
+## Improvements
+
+The chosen approach needs to wait for each response of Mercado Livre's pages to parse and return the results. The main disavantage about this approach is that the api is limited by the response of each product page, which can be very slow. Another disavantage would be that, in general, crawlers are susceptible of errors if the page changes its content. A single CSS class change could break the entire code.There are a few alternatives that can be done to improve the response time and the reliability of the code:
+
+- Save search results in a local database and make sure that there's an expiration time to know when the search should be made in Mercado Livre's website again
+- Check if the website has an API to be used instead of using a crawler
+- Create a crawler that will fetch all products from the website
+
+## Dependencies
+
+The API framework used was Express. This was because express is simple to use, provides middlewares for customization and steps definition, and it's very well supported by a huge community. All three factors were considered to ensure that the API could be maintained for a longer time.
+To retrieve information from the website, Axios was used in combination with Cheerio. The first fetches the response of the urls and the latter works as a jquery tool on the html responded by Axios. Therefore, I can fetch the results of the API and navigate through the HTML with the CSS definitions.
+
+### Production
+  - axios
+  - cheerio
+  - express
+
+### Development
+  - @types/jest
+  - @types/node
+  - @types/supertest
+  - @typescript-eslint/eslint-plugin
+  - copyfiles
+  - eslint
+  - eslint-config-standard-with-typescript
+  - eslint-plugin-import
+  - eslint-plugin-node
+  - eslint-plugin-promise
+  - eslint-plugin-standard
+  - faker
+  - git-commit-msg-linter
+  - husky
+  - jest
+  - lint-staged
+  - nock
+  - rimraf
+  - supertest
+  - ts-jest
+  - typescript
