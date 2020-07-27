@@ -18,7 +18,8 @@ export class ProductPage {
   parseProduct (): ProductModel {
     const link = this.url
     const name = $(this.NAME, this.page.data).text()
-    const price = $(this.PRICE, this.page.data)[0].attribs.content
+    const priceElement = $(this.PRICE, this.page.data)[0]
+    const price = priceElement ? priceElement.attribs.content : null
     const store = $(this.STORE, this.page.data).text()
     const state = $(this.STATE, this.page.data).text().split('|')[0]
 

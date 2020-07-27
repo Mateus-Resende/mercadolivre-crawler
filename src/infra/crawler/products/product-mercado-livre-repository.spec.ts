@@ -3,10 +3,6 @@ import axios from 'axios'
 import http from 'axios/lib/adapters/http'
 import { MercadoLivreRepository } from './product-mercado-livre-repository'
 
-nockBack.fixtures = './test/recorded-results/products'
-nock.disableNetConnect()
-axios.defaults.adapter = http
-
 const makeSut = (): MercadoLivreRepository => {
   return new MercadoLivreRepository()
 }
@@ -31,6 +27,15 @@ const prepareScope = (scope: any): any => {
 }
 
 describe('ProductMercadoLivreRepository', () => {
+  beforeAll(() => {
+    nockBack.fixtures = './test/recorded-results/products'
+    nock.disableNetConnect()
+    axios.defaults.adapter = http
+  })
+
+  afterAll(() => {
+    nock.restore()
+  })
   describe('search()', () => {
     test('Should return an array of products on success', async () => {
       const { nockDone } = await nockBack('mechanical-keyboard-search.json', { before: prepareScope })
