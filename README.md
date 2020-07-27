@@ -40,14 +40,19 @@ The project was built using TDD and making sure that each passing test results i
 ## Setup
 
 Make sure you have at least node v12 installed and run `yarn install` in the root folder.
+
 To run the api:
   ```yarn build && yarn start```
+
 To run tests:
   ```yarn test```
+
 To run unit tests and watch while developing:
   ```yarn run test:unit```
+
 To run integration tests:
   ```yarn run test:integraiton```
+
 To run with coverage:
   ```yarn run test:ci```
 
