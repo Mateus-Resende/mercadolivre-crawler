@@ -67,6 +67,7 @@ The chosen approach needs to wait for each response of Mercado Livre's pages to 
 ## Dependencies
 
 The API framework used was Express. This was because express is simple to use, provides middlewares for customization and steps definition, and it's very well supported by a huge community. All three factors were considered to ensure that the API could be maintained for a longer time.
+
 To retrieve information from the website, Axios was used in combination with Cheerio. The first fetches the response of the urls and the latter works as a jquery tool on the html responded by Axios. Therefore, I can fetch the results of the API and navigate through the HTML with the CSS definitions.
 
 ### Production
