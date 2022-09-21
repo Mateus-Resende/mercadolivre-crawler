@@ -49,6 +49,6 @@ describe('ProductMercadoLivreRepository', () => {
       expect(products).toBeInstanceOf(Array)
       expect(products.length).toEqual(searchParams.limit)
       nockDone()
-    }, 10000)
+    }, 1000000)
   })
 })

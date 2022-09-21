@@ -1,4 +1,4 @@
-import $ from 'cheerio'
+import { load } from 'cheerio'
 import Axios from 'axios'
 import { ProductModel } from '../../../../domain/models/product'
 
@@ -17,11 +17,12 @@ export class ProductPage {
 
   parseProduct (): ProductModel {
     const link = this.url
-    const name = $(this.NAME, this.page.data).text()
-    const priceElement = $(this.PRICE, this.page.data)[0]
-    const price = priceElement ? priceElement.attribs.content : null
-    const store = $(this.STORE, this.page.data).text()
-    const state = $(this.STATE, this.page.data).text().split('|')[0]
+    const $ = load(this.page.data)
+    const name = $(this.NAME).text()
+    const priceElement = $(this.PRICE)[0]
+    const price = priceElement ? Number(priceElement.attribs.content) : null
+    const store = $(this.STORE).text()
+    const state = $(this.STATE).text().split('|')[0]
 
     return {
       name,
